@@ -414,33 +414,51 @@ class TimeSerialDeal(BaseSerialDeal):
         for index, this_date in enumerate(self.date_list):
             self.traverseDaily(this_date, code, determine_func, determine_param)
 
-def dailyTest(filename=""):
+def dailyTest(filename="", initial_balance=100000):
     serial_data = TimeSerialDeal()
     serial_data.loadCsvHasHead(filename)
     code = "000000" if len(filename) < 10 else filename[-10:-4]  # remove .csv
 
-    serial_data.dealer.balance = 100000
+    serial_data.dealer.balance = initial_balance
 
     for date in serial_data.date_list:
         serial_data.traverseDaily(date, code)
 
     final_close = serial_data.daily_summary[serial_data.date_list[-1]].close
     net_value = serial_data.dealer.evalWorth({code: final_close})
-    print(code + "----------------------------")
-    print(net_value)
-    print(serial_data.dealer)
+    if net_value == initial_balance
+        print ("----------------------------" + code)
+    else:
+        print (code + "----------------------------")
+        print(net_value)
+        print(serial_data.dealer)
 
-if __name__ == '__main__':
+    return net_value
 
-    file_dir = os.path.abspath("D:\stock\YiQi_new")
+
+def testFolder(file_dir="", initial_balance=100000):
     files = os.listdir(file_dir)
+    total_pool = initial_balance * len(files)
 
-
+    result = []
 
     with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
         for file in files:
             file_name = os.path.join(file_dir, file)
-            executor.submit(dailyTest, file_name)
+            obj = executor.submit(dailyTest, file_name, initial_balance)
+            result.append(obj)
+
+    result_balance = 0.0
+    for obj in result:
+        result_balance += float(obj.result())
+
+    return result_balance
+
+if __name__ == '__main__':
+
+    file_dir = os.path.abspath("D:\stock\YiQi_new")
+    testFolder(file_dir)
+
 
 
     # #print (serial_data)
