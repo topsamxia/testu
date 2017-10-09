@@ -317,7 +317,8 @@ class TimeSerialDeal(BaseSerialDeal):
             date_1 = self.date_list[abs_date_index - 1] # yesterday
             date_2 = self.date_list[abs_date_index - 2] # day before yesterday
             date_3 = self.date_list[abs_date_index - 3] # today -3
-            if (self.daily_summary[date_2].close * self.daily_summary[date_2].volume * 100 > 10000000): # if volume is right
+            if (self.daily_summary[date_2].close * self.daily_summary[date_2].volume * 100
+                    > 10000000): # if volume is right
                 # if day before yesterday is Zhang Ting,  and yesterday Shang Zhang, and today Xia Die
                 return (zhangTing(self.daily_summary[date_3].close, self.daily_summary[date_2].close) \
                         and shangZhang(self.daily_summary[date_2].close, self.daily_summary[date_1].close, 3.0) \
@@ -413,6 +414,30 @@ class TimeSerialDeal(BaseSerialDeal):
     def traverseAll(self, code="", determine_func=None, determine_param=()):
         for index, this_date in enumerate(self.date_list):
             self.traverseDaily(this_date, code, determine_func, determine_param)
+
+# convert the tushare data in 5 minutes to the storage format
+# that can be merged later
+# input: tushare 5 minute result
+# output: result with head in given format
+def processDailyData(tu_inputfile="", defined_exportfile=""):
+    df = pd.read_csv(tu_inputfile)
+    if len(df.index) == 0: pass
+
+    def splitDate(x):
+        return x.split(" ")[0]
+
+    def splitTime(x):
+        return x.split(" ")[1]
+
+    series_date = df.date.apply(splitDate)
+    series_time = df.date.apply(splitTime)
+
+    df["date"] = series_date
+    df["time"] = series_time
+
+    df.set_index(["date", "time"], inplace=True)
+    print (df)
+    df.to_csv(defined_exportfile)
 
 def dailyTest(filename="", initial_balance=100000):
     serial_data = TimeSerialDeal()

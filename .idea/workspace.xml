@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="53f2529b-01b3-4cdd-9e2b-5b4eab8142c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MergeDataConcurrent.py" afterPath="$PROJECT_DIR$/MergeDataConcurrent.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StkFX.py" afterPath="$PROJECT_DIR$/StkFX.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +22,7 @@
           <file leaf-file-name="tushare_samples.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tushare_samples.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="510">
+                <state relative-caret-position="0">
                   <caret line="33" column="32" lean-forward="false" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
                   <folding />
                 </state>
@@ -33,7 +32,7 @@
           <file leaf-file-name="testplot.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/testplot.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3349">
+                <state relative-caret-position="0">
                   <caret line="199" column="10" lean-forward="false" selection-start-line="199" selection-start-column="10" selection-end-line="199" selection-end-column="10" />
                   <folding />
                 </state>
@@ -43,7 +42,7 @@
           <file leaf-file-name="cleancode.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/cleancode.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
+                <state relative-caret-position="0">
                   <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
                   <folding>
                     <element signature="e#0#19#0" expanded="true" />
@@ -55,7 +54,7 @@
           <file leaf-file-name="DataMaintainerMultiThread.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/DataMaintainerMultiThread.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1020">
+                <state relative-caret-position="0">
                   <caret line="60" column="37" lean-forward="false" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
@@ -64,26 +63,33 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/StkFX.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1254">
-                  <caret line="222" column="0" lean-forward="true" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
+                <state relative-caret-position="-895">
+                  <caret line="426" column="30" lean-forward="true" selection-start-line="426" selection-start-column="30" selection-end-line="426" selection-end-column="30" />
                   <folding>
                     <element signature="e#98#117#0" expanded="true" />
-                    <marker date="1507515840000" expanded="true" signature="17065:17386" ph="..." />
-                    <marker date="1507515840000" expanded="true" signature="17233:17386" ph="..." />
-                    <marker date="1507515840000" expanded="true" signature="17260:17386" ph="..." />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="MergeDataConcurrent.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="5min_000529.csv" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/5min_000529.csv">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="651">
+                  <caret line="31" column="44" lean-forward="true" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MergeDataConcurrent.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/MergeDataConcurrent.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="188">
-                  <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+                <state relative-caret-position="-16">
+                  <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
                   <folding>
                     <element signature="e#35#54#0" expanded="true" />
                   </folding>
@@ -98,8 +104,8 @@
           <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/StkFX.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="551">
-                  <caret line="459" column="24" lean-forward="true" selection-start-line="459" selection-start-column="24" selection-end-line="459" selection-end-column="24" />
+                <state relative-caret-position="485">
+                  <caret line="311" column="39" lean-forward="true" selection-start-line="311" selection-start-column="39" selection-end-line="311" selection-end-column="39" />
                   <folding>
                     <element signature="e#98#117#0" expanded="true" />
                   </folding>
@@ -163,12 +169,12 @@
         <option value="$PROJECT_DIR$/Monitoring.py" />
         <option value="$PROJECT_DIR$/DataMaintainer.py" />
         <option value="$PROJECT_DIR$/DataMaintainerMultiThread.py" />
-        <option value="$PROJECT_DIR$/StkFX.py" />
         <option value="$PROJECT_DIR$/MergeDataConcurrent.py" />
+        <option value="$PROJECT_DIR$/StkFX.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="1136" />
@@ -221,7 +227,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -384,6 +390,14 @@
       <option name="presentableId" value="Default" />
       <updated>1503934061886</updated>
     </task>
+    <task id="LOCAL-00001" summary="Update balance calculation so can compare the final result.">
+      <created>1507516160988</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1507516160988</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -422,6 +436,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update balance calculation so can compare the final result." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update balance calculation so can compare the final result." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -539,7 +557,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/StkFX.py</url>
-          <line>390</line>
+          <line>391</line>
           <option name="timeStamp" value="189" />
         </line-breakpoint>
       </breakpoints>
@@ -763,7 +781,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tushare_samples.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
+        <state relative-caret-position="0">
           <caret line="33" column="32" lean-forward="false" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
           <folding />
         </state>
@@ -771,7 +789,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testplot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3349">
+        <state relative-caret-position="0">
           <caret line="199" column="10" lean-forward="false" selection-start-line="199" selection-start-column="10" selection-end-line="199" selection-end-column="10" />
           <folding />
         </state>
@@ -779,7 +797,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cleancode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
+        <state relative-caret-position="0">
           <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -798,18 +816,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/5min_000529.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="44" lean-forward="true" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/Lib/codecs.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/1024303582/builtins.py" />
     <entry file="file://$PROJECT_DIR$/DataMaintainerMultiThread.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
+        <state relative-caret-position="0">
           <caret line="60" column="37" lean-forward="false" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="37" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -817,25 +828,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/StkFX.py">
+    <entry file="file://$PROJECT_DIR$/MergeDataConcurrent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1254">
-          <caret line="222" column="0" lean-forward="true" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
+        <state relative-caret-position="-16">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="e#98#117#0" expanded="true" />
-            <marker date="1507515840000" expanded="true" signature="17065:17386" ph="..." />
-            <marker date="1507515840000" expanded="true" signature="17233:17386" ph="..." />
-            <marker date="1507515840000" expanded="true" signature="17260:17386" ph="..." />
+            <element signature="e#35#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MergeDataConcurrent.py">
+    <entry file="file://$PROJECT_DIR$/5min_000529.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="651">
+          <caret line="31" column="44" lean-forward="true" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StkFX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-895">
+          <caret line="426" column="30" lean-forward="true" selection-start-line="426" selection-start-column="30" selection-end-line="426" selection-end-column="30" />
           <folding>
-            <element signature="e#35#54#0" expanded="true" />
+            <element signature="e#98#117#0" expanded="true" />
           </folding>
         </state>
       </provider>
