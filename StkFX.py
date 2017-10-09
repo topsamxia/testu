@@ -318,7 +318,8 @@ class TimeSerialDeal(BaseSerialDeal):
             date_1 = self.date_list[abs_date_index - 1] # yesterday
             date_2 = self.date_list[abs_date_index - 2] # day before yesterday
             date_3 = self.date_list[abs_date_index - 3] # today -3
-            if (self.daily_summary[date_2].close * self.daily_summary[date_2].volume * 100 > 10000000): # if volume is right
+            if (self.daily_summary[date_2].close * self.daily_summary[date_2].volume * 100
+                    > 10000000): # if volume is right
                 # if day before yesterday is Zhang Ting,  and yesterday Shang Zhang, and today Xia Die
                 return (zhangTing(self.daily_summary[date_3].close, self.daily_summary[date_2].close) \
                         and shangZhang(self.daily_summary[date_2].close, self.daily_summary[date_1].close, 3.0) \
@@ -431,6 +432,31 @@ def dailyTest(filename=""):
     print(net_value)
     print(serial_data.dealer)
 
+
+# convert the tushare data in 5 minutes to the storage format
+# that can be merged later
+# input: tushare 5 minute result
+# output: result with head in given format
+def processDailyData(tu_inputfile="", defined_exportfile=""):
+    df = pd.read_csv(tu_inputfile)
+    if len(df.index) == 0: pass
+
+    def splitDate(x):
+        return x.split(" ")[0]
+
+    def splitTime(x):
+        return x.split(" ")[1]
+
+    series_date = df.date.apply(splitDate)
+    series_time = df.date.apply(splitTime)
+
+    df["date"] = series_date
+    df["time"] = series_time
+
+    df.set_index(["date", "time"], inplace=True)
+    print (df)
+    df.to_csv(defined_exportfile)
+
 def updateStockBasics(filename="stock_basics.json", withDate=False):
     if withDate:
         date_postfix = "_"+time.strftime("%Y%m%d")
@@ -458,10 +484,10 @@ if __name__ == '__main__':
     print(basics)
     print(basics.index)
 
-    # with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
-    #     for file in files:
-    #         file_name = os.path.join(file_dir, file)
-    #         executor.submit(dailyTest, file_name)
+    with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+        for file in files:
+            file_name = os.path.join(file_dir, file)
+            executor.submit(dailyTest, file_name)
 
 
     # #print (serial_data)

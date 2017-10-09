@@ -63,14 +63,13 @@
           <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/StkFX.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1124">
-                  <caret line="463" column="4" lean-forward="false" selection-start-line="463" selection-start-column="4" selection-end-line="463" selection-end-column="4" />
+                <state relative-caret-position="457">
+                  <caret line="460" column="4" lean-forward="false" selection-start-line="460" selection-start-column="4" selection-end-line="460" selection-end-column="4" />
                   <folding>
                     <element signature="e#98#117#0" expanded="true" />
-                    <marker date="1507566346932" expanded="true" signature="10005:11855" ph="..." />
-                    <marker date="1507566346932" expanded="true" signature="11421:11855" ph="..." />
-                    <marker date="1507566346932" expanded="true" signature="11503:11855" ph="..." />
-                    <marker date="1507566346932" expanded="true" signature="19379:20035" ph="..." />
+                    <marker date="1507567105111" expanded="true" signature="10005:11855" ph="..." />
+                    <marker date="1507567105111" expanded="true" signature="11503:11855" ph="..." />
+                    <marker date="1507567105111" expanded="true" signature="18518:19167" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -125,8 +124,8 @@
           <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/StkFX.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-310">
-                  <caret line="480" column="12" lean-forward="false" selection-start-line="480" selection-start-column="12" selection-end-line="480" selection-end-column="12" />
+                <state relative-caret-position="380">
+                  <caret line="447" column="30" lean-forward="true" selection-start-line="447" selection-start-column="30" selection-end-line="447" selection-end-column="30" />
                   <folding>
                     <element signature="e#98#117#0" expanded="true" />
                   </folding>
@@ -180,6 +179,7 @@
       <find>volume</find>
       <find>dieTing</find>
       <find>loadCsvHasHead</find>
+      <find>self.daily_summary[date_2].</find>
     </findStrings>
     <replaceStrings>
       <replace>records</replace>
@@ -590,16 +590,6 @@
           <line>391</line>
           <option name="timeStamp" value="189" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/StkFX.py</url>
-          <line>484</line>
-          <option name="timeStamp" value="190" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/StkFX.py</url>
-          <line>474</line>
-          <option name="timeStamp" value="193" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -970,8 +960,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/StkFX.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-310">
-          <caret line="480" column="12" lean-forward="false" selection-start-line="480" selection-start-column="12" selection-end-line="480" selection-end-column="12" />
+        <state relative-caret-position="380">
+          <caret line="447" column="30" lean-forward="true" selection-start-line="447" selection-start-column="30" selection-end-line="447" selection-end-column="30" />
           <folding>
             <element signature="e#98#117#0" expanded="true" />
           </folding>
