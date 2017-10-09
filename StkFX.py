@@ -10,6 +10,7 @@ import numpy as np
 import tushare as ts
 import os, time, datetime
 import concurrent.futures
+import json
 
 # Shang Zhang
 def shangZhang(close_old, close_new, factor = 3):
@@ -430,17 +431,37 @@ def dailyTest(filename=""):
     print(net_value)
     print(serial_data.dealer)
 
+def updateStockBasics(filename="stock_basics.json", withDate=False):
+    if withDate:
+        date_postfix = "_"+time.strftime("%Y%m%d")
+        filename = ".".join([".".join(filename.split(".")[:-1])+date_postfix, filename.split(".")[-1]])
+
+    stock_basics = ts.get_stock_basics()
+    stock_basics.to_json(filename)
+    # code_series = list(stock_basics.index)
+    # with open(filename, 'w', encoding='utf-8') as f:
+    #     json.dump(code_series, f)
+
+def getStockBasics(filename="stock_basics.json"):
+    return pd.read_json(filename)
+
+
 if __name__ == '__main__':
 
     file_dir = os.path.abspath("D:\stock\YiQi_new")
     files = os.listdir(file_dir)
 
+    print(ts.get_stock_basics())
 
+    updateStockBasics()
+    basics = getStockBasics()
+    print(basics)
+    print(basics.index)
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
-        for file in files:
-            file_name = os.path.join(file_dir, file)
-            executor.submit(dailyTest, file_name)
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+    #     for file in files:
+    #         file_name = os.path.join(file_dir, file)
+    #         executor.submit(dailyTest, file_name)
 
 
     # #print (serial_data)
