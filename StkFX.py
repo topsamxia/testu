@@ -16,17 +16,21 @@ import json
 def shangZhang(close_old, close_new, factor = 3):
     return float(close_new) / float(close_old) >= factor/100 + 1
 
+
 # Xia Die
 def xiaDie(close_old, close_new, factor = -3):
     return float(close_new) / float(close_old) <= factor/100 + 1
+
 
 # Zhang Ting
 def zhangTing(close_old, close_new):
     return shangZhang(close_old, close_new, 9.8)
 
+
 # Die Ting
 def dieTing(close_old, close_new):
     return xiaDie(close_old, close_new, -9.8)
+
 
 # structure that to hold single transaction or daily summary
 class SingleDeal(object):
@@ -46,17 +50,17 @@ class SingleDeal(object):
         self.dt = dt
 
     def __str__(self):
-        return str([self.code, \
-                    self.is_buy, \
-                    self.date, \
-                    self.time, \
-                    self.open, \
-                    self.close, \
-                    self.high, \
-                    self.low, \
-                    self.volume, \
-                    self.total, \
-                    self.zt, \
+        return str([self.code,
+                    self.is_buy,
+                    self.date,
+                    self.time,
+                    self.open,
+                    self.close,
+                    self.high,
+                    self.low,
+                    self.volume,
+                    self.total,
+                    self.zt,
                     self.dt])
 
     def __repr__(self):
@@ -161,13 +165,13 @@ class SimulateDeal(object):
             # set occupied = True if short of money for a share
             if self.balance/price//100 <= 0: self.occupied = True
 
-            dealInfo = SingleDeal(code = code, \
-                                  is_buy = True, \
-                                  date = date, \
-                                  time = time, \
-                                  open = price, close = price, high = price, low = price, \
-                                  volume = shou_amount, \
-                                  total = expenditure, \
+            dealInfo = SingleDeal(code = code,
+                                  is_buy = True,
+                                  date = date,
+                                  time = time,
+                                  open = price, close = price, high = price, low = price,
+                                  volume = shou_amount,
+                                  total = expenditure,
                                   zt = False, dt = False)
             self.records.append(dealInfo)
 
@@ -228,20 +232,21 @@ class SimulateDeal(object):
         else:
             self.holding[code][1] = (net_value_origin - net_sold)/self.holding[code][0]/100
 
-        dealInfo = SingleDeal(code=code, \
+        dealInfo = SingleDeal(code=code,
                               # not buy
-                              is_buy=False, \
-                              date=date, \
-                              time=time, \
-                              open=price, close=price, high=price, low=price, \
-                              volume=volume, \
-                              total=volume*100*price, \
+                              is_buy=False,
+                              date=date,
+                              time=time,
+                              open=price, close=price, high=price, low=price,
+                              volume=volume,
+                              total=volume*100*price,
                               zt=False, dt=False)
         self.records.append(dealInfo)
 
         self.updateRestrictions(False, date, time, code, volume)
 
         return True
+
 
 class BaseSerialDeal(object):
     'base class to holding stock data and common utilities'
@@ -276,6 +281,7 @@ class BaseSerialDeal(object):
 
     def saveCsv(self, path='default.csv'):
         pass
+
 
 class TimeSerialDeal(BaseSerialDeal):
     'base class to holding stock data and common utilities'
@@ -321,8 +327,8 @@ class TimeSerialDeal(BaseSerialDeal):
             if (self.daily_summary[date_2].close * self.daily_summary[date_2].volume * 100
                     > 10000000): # if volume is right
                 # if day before yesterday is Zhang Ting,  and yesterday Shang Zhang, and today Xia Die
-                return (zhangTing(self.daily_summary[date_3].close, self.daily_summary[date_2].close) \
-                        and shangZhang(self.daily_summary[date_2].close, self.daily_summary[date_1].close, 3.0) \
+                return (zhangTing(self.daily_summary[date_3].close, self.daily_summary[date_2].close)
+                        and shangZhang(self.daily_summary[date_2].close, self.daily_summary[date_1].close, 3.0)
                         and xiaDie(self.daily_summary[date_1].close, price, -3.0)) # if today xia Die -3% or more
 
         return False
@@ -337,9 +343,9 @@ class TimeSerialDeal(BaseSerialDeal):
 
             if (self.daily_summary[date_3].close * self.daily_summary[date_3].volume * 100 > 10000000):
                 # if day -3 is Zhangting, and Xia Die for 2 days, and now Xia Die again
-                return (zhangTing(self.daily_summary[date_4].close, self.daily_summary[date_3].close) \
-                    and xiaDie(self.daily_summary[date_3].close, self.daily_summary[date_2].close) \
-                    and xiaDie(self.daily_summary[date_2].close, self.daily_summary[date_1].close) \
+                return (zhangTing(self.daily_summary[date_4].close, self.daily_summary[date_3].close)
+                    and xiaDie(self.daily_summary[date_3].close, self.daily_summary[date_2].close)
+                    and xiaDie(self.daily_summary[date_2].close, self.daily_summary[date_1].close)
                     and xiaDie(self.daily_summary[date_1].close, price, -1))
         return False
 
@@ -347,7 +353,7 @@ class TimeSerialDeal(BaseSerialDeal):
         # over 5 days holding
         abs_date_index = self.date_list.index(date)
         if (self.dealer.last_buy_time[0] in self.date_list) \
-            and (abs_date_index - self.date_list.index(self.dealer.last_buy_time[0]) >= 7):
+                and (abs_date_index - self.date_list.index(self.dealer.last_buy_time[0]) >= 7):
             return True
 
         # over 8% profit
@@ -416,6 +422,7 @@ class TimeSerialDeal(BaseSerialDeal):
         for index, this_date in enumerate(self.date_list):
             self.traverseDaily(this_date, code, determine_func, determine_param)
 
+
 def dailyTest(filename=""):
     serial_data = TimeSerialDeal()
     serial_data.loadCsvHasHead(filename)
@@ -437,8 +444,8 @@ def dailyTest(filename=""):
 # that can be merged later
 # input: tushare 5 minute result
 # output: result with head in given format
-def processDailyData(tu_inputfile="", defined_exportfile=""):
-    df = pd.read_csv(tu_inputfile)
+def processDailyData(tu_input_file="", defined_export_file=""):
+    df = pd.read_csv(tu_input_file)
     if len(df.index) == 0: pass
 
     def splitDate(x):
@@ -455,7 +462,8 @@ def processDailyData(tu_inputfile="", defined_exportfile=""):
 
     df.set_index(["date", "time"], inplace=True)
     print (df)
-    df.to_csv(defined_exportfile)
+    df.to_csv(defined_export_file)
+
 
 def updateStockBasics(filename="stock_basics.json", withDate=False):
     if withDate:
@@ -467,6 +475,7 @@ def updateStockBasics(filename="stock_basics.json", withDate=False):
     # code_series = list(stock_basics.index)
     # with open(filename, 'w', encoding='utf-8') as f:
     #     json.dump(code_series, f)
+
 
 def getStockBasics(filename="stock_basics.json"):
     return pd.read_json(filename)
