@@ -3,7 +3,7 @@ import numpy as np
 import tushare as ts
 import os, time, datetime
 import concurrent.futures
-import json
+import json, pickle
 
 # pickle can be done by
 # explicit pickle every property and make them a dictionary, then call pickle
@@ -52,28 +52,81 @@ class PickleDataTest(PickleEnabler):
         if "code" in self.pickle_storage.keys():
             self.code = self.pickle_storage["code"]
 
+class DailySequentialStatus(object)
+    def __init__(self):
+        self.open = 0.0
+        self.close = 0.0
+        self.high = 0.0
+        self.low = 0.0
+        self.volume = 0
+        self.total = 0.0
+        self.zdf = 0.0
+        self.code = ""
 
+        # sampling price across the day
+        self.sampling = []
 
-class StkHelperData(object):
-    'calculate and store the calculated statistics'
+        super(StkHelperData, self).__init__()
+
+class StkHelperData(PickleEnabler):
+    'calculate and store the calculated statistics, for given stock'
 
     def __init__(self):
         # properties go here
-        stk_code = ""
+        self.stk_code = ""
 
-        pass
+        # date->DailySequentialStatus
+        self.seqential_status_map={}
+
+        super(StkHelperData, self).__init__()
 
     # calculate the helper data by transaction data
+    # input is the 5 minute series system
     def calculate_data(self, df=None):
+
+
+        date_str_list = []
+        [date_str_list.append(date_str) for date_str in pd.index.get_level_values('date').unique()]
+
+        for date_current in date_str_list:
+
+            date_current_index = date_str_list.index(date_current)
+
+            pd_current = pd.loc[date_current]
+
+            sequential_status = DailySequentialStatus()
+            sequential_status.open = pd_current.iloc[0].open
+            sequential_status.close = pd_current.iloc[-1].close
+            sequential_status.low = pd_current['low'].min(axis=0)
+            sequential_status.high = pd_current['high'].max(axis=0)
+            sequential_status.volume = pd_current['volume'].sum(axis=0)
+            sequential_status.total = pd_current['total'].sum(axis=0)
+
+            sequential_status.sampling = pd_current['close'].tolist()
+
+            if date_current_index >= 1:
+                last_close = self.seqential_status_map[date_str_list[date_current_index-1]].close
+                sequential_status.zdf = sequential_status.close/last_close - 1.0
+
         pass
 
     # save data
     def save_data(self, filename=""):
-        pass
+        try:
+            with open(filename, 'w') as f:
+                pickle.dump(self.stk_code, self.sequential_status), f)
+                return True
+        except:
+            return False
 
     # load data
     def load_data(self, filename=""):
-        pass
+        try:
+            with open(filename, 'r') as f:
+                self.stk_code, self.seqential_status = pickle.load(filename)
+            return True
+        except:
+            return False
 
     # update data with recent transactions
     def update_data_batch(self, df=None):
@@ -85,12 +138,11 @@ class StkHelperData(object):
         pass
 
     # sample of future queries
-    def is_zhangting(self, date):
+    def is_zhangting(self, date=""):
         pass
 
-    def is_dieting(self, date):
+    def is_dieting(self, date=""):
         pass
-
 
 class StkDataKeeper(object):
     'read/write/process/hold data'
@@ -102,8 +154,23 @@ class StkDataKeeper(object):
 
 
     def save_to_folder(self, data_folder=""):
-        self.helper_data
+        pass
 
+
+    def splitDateTime(self, df=None):
+        if len(df.index) == 0: pass
+
+        def splitDate(x):
+            return x.split(" ")[0]
+
+        def splitTime(x):
+            return x.split(" ")[1]
+
+        series_date = df.date.apply(splitDate)
+        series_time = df.date.apply(splitTime)
+
+        df["date"] = series_date
+        df["time"] = series_time
 
     # get data from given csv
     # return a formatted DataFrame object
@@ -123,6 +190,46 @@ class StkDataKeeper(object):
 
         return result_df
 
+    # date             open   close  high   low    volume  code
+    # 2014-11-17 14:55 21.946 22.305 22.465 21.047 33923.0 300191
+    #
+    # return formatted date & time indexed dataframe, with total estimation
+    def read_csv_tu_5min(self, filename=""):
+        df = self.read_csv(filename, True, index="date")
+        self.splitDateTime(df)
+        # simulate the total with calculation
+        df["total"] = df["volume"]*100*(df["open"]+df["close"]+df["high"]+df["low"])/4
+        return df
+
+    # date       open   close  high   low    volume  code
+    # 2014-11-17 21.946 22.305 22.465 21.047 33923.0 300191
+    #
+    # return: date indexed DataFrame
+    def read_csv_tu_daily(self, filename=""):
+        df = self.read_csv(filename=, True, index="date")
+        return df
+
+    # date time open high low close volume total
+    # 2015/1/5 9:35 16.47 16.47 16.18 16.2 2355 3838604
+    def read_csv_hist_5min(self, filename=""):
+        df = pd.read_csv(filename)
+        if len(df.index) == 0: pass
+
+        def splitDate(x):
+            return x.split(" ")[0]
+
+        def splitTime(x):
+            return x.split(" ")[1]
+
+        series_date = df.date.apply(splitDate)
+        series_time = df.date.apply(splitTime)
+
+        df["date"] = series_date
+        df["time"] = series_time
+        df["total"] = round((df["close"]+df["high"]+df["low"])*df["volume"]*100/3, 2)
+
+        df.set_index(["date", "time"], inplace=True)
+        return df
 
     # merge data for data maintenance
     # if daily data then index = ["date"]
@@ -162,12 +269,11 @@ class StkDataKeeper(object):
         pass
 
 
-if __name__ == "__main__":
+def testPickle():
     pickle_test = PickleDataTest()
     data_source = StkDataKeeper()
     pickle_test.df = data_source.get_realtime_transaction("000001")
     pickle_test.code = "300191"
-    import pickle
     p1 = pickle.dumps(pickle_test)
     pickle_test_new = pickle.loads(p1)
     print(pickle_test.df)
@@ -175,3 +281,10 @@ if __name__ == "__main__":
     print(pickle_test_new.df)
     df = pickle_test.df.append(pickle_test_new.df).drop_duplicates()
     print(df)
+
+if __name__ == "__main__":
+    data_keeper = StkDataKeeper()
+    df = data_keeper.read_csv("data/realtime-20171011-133600.csv", index="code")
+    df = data_keeper.read_csv_hist_5min("data/5min_300191.csv")
+    print(df)
+

@@ -478,25 +478,33 @@ def updateStockBasics(filename="stock_basics.json", withDate=False):
 
 
 def getStockBasics(filename="stock_basics.json"):
-    return pd.read_json(filename)
+    df = pd.read_json(filename)
+    new_index = []
+    def makeupLeadingZero(x):
+        y=str(x)
+        return y if len(y) >= 6 else "0"*(6-len(y))+y
 
+    [new_index.append(makeupLeadingZero(each_index)) for each_index in df.index]
+    df.index = new_index
+    print(new_index)
+    return df
 
 if __name__ == '__main__':
 
-    file_dir = os.path.abspath("D:\stock\YiQi_new")
-    files = os.listdir(file_dir)
+    # file_dir = os.path.abspath("D:\stock\YiQi_new")
+    # files = os.listdir(file_dir)
 
-    print(ts.get_stock_basics())
-
-    updateStockBasics()
+    # print(ts.get_stock_basics())
+    #
+    # updateStockBasics()
     basics = getStockBasics()
     print(basics)
     print(basics.index)
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
-        for file in files:
-            file_name = os.path.join(file_dir, file)
-            executor.submit(dailyTest, file_name)
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+    #     for file in files:
+    #         file_name = os.path.join(file_dir, file)
+    #         executor.submit(dailyTest, file_name)
 
 
     # #print (serial_data)
