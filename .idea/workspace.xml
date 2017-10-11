@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="53f2529b-01b3-4cdd-9e2b-5b4eab8142c4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/experimental.ipynb" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/5min_000529.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/day_000529.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/result.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stock_basics.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/samx.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/samx.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/testu.iml" afterPath="$PROJECT_DIR$/.idea/testu.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StkDataKeeper.py" afterPath="$PROJECT_DIR$/StkDataKeeper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StkFX.py" afterPath="$PROJECT_DIR$/StkFX.py" />
-    </list>
+    <list default="true" id="53f2529b-01b3-4cdd-9e2b-5b4eab8142c4" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,105 +13,136 @@
     <favorites_list name="testu" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.40822786">
+    <splitter split-orientation="horizontal" split-proportion="0.9">
       <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-          <file leaf-file-name="testplot.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/testplot.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4137">
-                  <caret line="199" column="10" lean-forward="false" selection-start-line="199" selection-start-column="10" selection-end-line="199" selection-end-column="10" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="cleancode.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cleancode.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="168">
-                  <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#0#19#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/StkFX.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="7245">
-                  <caret line="350" column="0" lean-forward="false" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#98#117#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MergeData.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/MergeData.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="189">
-                  <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DataMaintainer.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/DataMaintainer.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="19" column="69" lean-forward="false" selection-start-line="19" selection-start-column="69" selection-end-line="19" selection-end-column="69" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="ObtainDailyData.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ObtainDailyData.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="496">
-                  <caret line="34" column="62" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="62" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Traverse.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Traverse.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="610">
-                  <caret line="71" column="18" lean-forward="true" selection-start-line="59" selection-start-column="8" selection-end-line="71" selection-end-column="18" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="experimental.ipynb" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/experimental.ipynb">
-              <provider selected="true" editor-type-id="ipnb-editor">
-                <state>
-                  <selected id="4" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MergeDataConcurrent.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/MergeDataConcurrent.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="252">
-                  <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#35#54#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
+        <splitter split-orientation="horizontal" split-proportion="0.5">
+          <split-first>
+            <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+              <file leaf-file-name="testplot.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/testplot.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="5122">
+                      <caret line="199" column="10" lean-forward="false" selection-start-line="199" selection-start-column="10" selection-end-line="199" selection-end-column="10" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="cleancode.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/cleancode.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="208">
+                      <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+                      <folding>
+                        <element signature="e#0#19#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="StkFX.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/StkFX.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="8970">
+                      <caret line="350" column="0" lean-forward="false" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
+                      <folding>
+                        <element signature="e#98#117#0" expanded="true" />
+                        <marker date="1507727427247" expanded="true" signature="17981:17986" ph="..." />
+                        <marker date="1507727427247" expanded="true" signature="18702:19404" ph="..." />
+                        <marker date="1507727427247" expanded="true" signature="18755:19404" ph="..." />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="MergeData.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/MergeData.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="234">
+                      <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="StkDataKeeper.py" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/StkDataKeeper.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="877">
+                      <caret line="323" column="15" lean-forward="true" selection-start-line="323" selection-start-column="15" selection-end-line="323" selection-end-column="15" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="DataMaintainer.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/DataMaintainer.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="468">
+                      <caret line="19" column="69" lean-forward="false" selection-start-line="19" selection-start-column="69" selection-end-line="19" selection-end-column="69" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="ObtainDailyData.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/ObtainDailyData.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="780">
+                      <caret line="34" column="62" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="62" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="Traverse.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/Traverse.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="246">
+                      <caret line="57" column="28" lean-forward="true" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="experimental.ipynb" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/experimental.ipynb">
+                  <provider selected="true" editor-type-id="ipnb-editor">
+                    <state>
+                      <selected id="4" />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="MergeDataConcurrent.py" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/MergeDataConcurrent.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="312">
+                      <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                      <folding>
+                        <element signature="e#35#54#0" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-first>
+          <split-second>
+            <leaf>
+              <file leaf-file-name="StkDataKeeper.py" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/StkDataKeeper.py">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="1031">
+                      <caret line="330" column="0" lean-forward="true" selection-start-line="330" selection-start-column="0" selection-end-line="330" selection-end-column="0" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-second>
+        </splitter>
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -139,21 +158,8 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="StkDataKeeper.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/StkDataKeeper.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#0#19#0" expanded="true" />
-                    <element signature="e#1181#1678#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="result.csv" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/data/result.csv">
+          <file leaf-file-name="5min_300191.csv" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/stksample/5min_300191.csv">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
                   <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -162,10 +168,30 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="20170929_150000.csv" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/stksample/20170929_150000.csv">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="codecs.py" pinned="false" current-in-tab="true">
+            <entry file="file://$USER_HOME$/Anaconda3/Lib/codecs.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="262">
+                  <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="testtu.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/testtu.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1974">
+                <state relative-caret-position="712">
                   <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="2" selection-end-line="98" selection-end-column="8" />
                   <folding />
                 </state>
@@ -211,6 +237,7 @@
       <find>self.daily_summary[date_2].</find>
       <find>__init__</find>
       <find>100/4</find>
+      <find>except</find>
     </findStrings>
     <replaceStrings>
       <replace>records</replace>
@@ -219,6 +246,7 @@
       <replace>is_buy</replace>
       <replace>sellable_volume</replace>
       <replace>saveCsvWithHead</replace>
+      <replace>finally</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -252,7 +280,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="46" />
     <option name="y" value="23" />
     <option name="width" value="1874" />
@@ -290,8 +318,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -302,16 +328,18 @@
             <path>
               <item name="testu" type="b2602c69:ProjectViewProjectNode" />
               <item name="testu" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="stksample" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -463,12 +491,12 @@
     </configuration>
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Python.DataMaintainerMultiThread" />
-      <item index="1" class="java.lang.String" itemvalue="Python.StkFX" />
-      <item index="2" class="java.lang.String" itemvalue="Python.DataMaintainer" />
-      <item index="3" class="java.lang.String" itemvalue="Python.MergeDataConcurrent" />
-      <item index="4" class="java.lang.String" itemvalue="Python.codecs" />
-      <item index="5" class="java.lang.String" itemvalue="Python.StkDataKeeper" />
-      <item index="6" class="java.lang.String" itemvalue="Jupyter Notebook.testu" />
+      <item index="1" class="java.lang.String" itemvalue="Jupyter Notebook.testu" />
+      <item index="2" class="java.lang.String" itemvalue="Python.StkFX" />
+      <item index="3" class="java.lang.String" itemvalue="Python.DataMaintainer" />
+      <item index="4" class="java.lang.String" itemvalue="Python.MergeDataConcurrent" />
+      <item index="5" class="java.lang.String" itemvalue="Python.codecs" />
+      <item index="6" class="java.lang.String" itemvalue="Python.StkDataKeeper" />
     </list>
     <recent_temporary>
       <list size="5">
@@ -503,19 +531,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1136" extended-state="6" />
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19382322" sideWeight="0.49275362" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19356121" sideWeight="0.49275362" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298217" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299532" sideWeight="0.5" order="15" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31123918" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3257989" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31118062" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1291733" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28059235" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.364073" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19753577" sideWeight="0.5072464" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3635653" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -612,13 +640,38 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
-          <line>179</line>
-          <option name="timeStamp" value="206" />
+          <line>205</line>
+          <option name="timeStamp" value="211" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
-          <line>214</line>
-          <option name="timeStamp" value="207" />
+          <line>225</line>
+          <option name="timeStamp" value="213" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
+          <line>325</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
+          <line>142</line>
+          <option name="timeStamp" value="217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
+          <line>323</line>
+          <option name="timeStamp" value="222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/StkDataKeeper.py</url>
+          <line>324</line>
+          <option name="timeStamp" value="224" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -631,7 +684,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="209" />
+      <option name="time" value="225" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -642,30 +695,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/testtu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tushare_samples.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testtu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="31900">
@@ -704,13 +733,6 @@
     <entry file="file://C:/Python27/Lib/site-packages/email/mime/text.py" />
     <entry file="file://$PROJECT_DIR$/email.py" />
     <entry file="file://C:/Python27/Lib/site-packages/threadpool.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="1602" column="0" lean-forward="false" selection-start-line="1602" selection-start-column="0" selection-end-line="1602" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/smtplib.py" />
     <entry file="file://$PROJECT_DIR$/email_test.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -759,7 +781,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testplot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4137">
+        <state relative-caret-position="5122">
           <caret line="199" column="10" lean-forward="false" selection-start-line="199" selection-start-column="10" selection-end-line="199" selection-end-column="10" />
           <folding />
         </state>
@@ -769,12 +791,11 @@
     <entry file="file://$USER_HOME$/Anaconda3/Lib/concurrent/futures/process.py" />
     <entry file="file://$USER_HOME$/Anaconda3/Lib/runpy.py" />
     <entry file="file://$USER_HOME$/Anaconda3/Lib/multiprocessing/spawn.py" />
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/codecs.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/1024303582/builtins.py" />
     <entry file="file://$PROJECT_DIR$/stock_basics.json" />
     <entry file="file://$PROJECT_DIR$/MergeDataConcurrent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
+        <state relative-caret-position="312">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
             <element signature="e#35#54#0" expanded="true" />
@@ -801,7 +822,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cleancode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
+        <state relative-caret-position="208">
           <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -811,51 +832,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/day_000529.csv" />
     <entry file="file://$PROJECT_DIR$/5min_000529.csv" />
-    <entry file="file://$PROJECT_DIR$/StkFX.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="144" column="21" lean-forward="false" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="21" />
-          <folding>
-            <element signature="e#98#117#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testtu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1974">
-          <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="2" selection-end-line="98" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MergeData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="32" column="26" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/result.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/realtime-20171011-133600.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/data/result.csv" />
+    <entry file="file://$PROJECT_DIR$/data/realtime-20171011-133600.csv" />
     <entry file="file://$PROJECT_DIR$/DataMaintainer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
+        <state relative-caret-position="468">
           <caret line="19" column="69" lean-forward="false" selection-start-line="19" selection-start-column="69" selection-end-line="19" selection-end-column="69" />
           <folding />
         </state>
@@ -870,28 +851,94 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ObtainDailyData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
+        <state relative-caret-position="780">
           <caret line="34" column="62" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stksample/20170929_150000.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testtu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="712">
+          <caret line="98" column="8" lean-forward="false" selection-start-line="98" selection-start-column="2" selection-end-line="98" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MergeData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stksample/5min_300191.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Traverse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="71" column="18" lean-forward="true" selection-start-line="59" selection-start-column="8" selection-end-line="71" selection-end-column="18" />
+        <state relative-caret-position="246">
+          <caret line="57" column="28" lean-forward="true" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3532">
+          <caret line="1600" column="29" lean-forward="true" selection-start-line="1600" selection-start-column="29" selection-end-line="1600" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="13" column="12" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/StkFX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8970">
+          <caret line="350" column="0" lean-forward="false" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
+          <folding>
+            <element signature="e#98#117#0" expanded="true" />
+            <marker date="1507727427247" expanded="true" signature="17981:17986" ph="..." />
+            <marker date="1507727427247" expanded="true" signature="18702:19404" ph="..." />
+            <marker date="1507727427247" expanded="true" signature="18755:19404" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/StkDataKeeper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <element signature="e#1181#1678#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="1031">
+          <caret line="330" column="0" lean-forward="true" selection-start-line="330" selection-start-column="0" selection-end-line="330" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
