@@ -296,7 +296,6 @@ class StkDataKeeper(object):
     def load_helper_data(self, folder_name="", df=None):
         pass
 
-
 def testPickle():
     pickle_test = PickleDataTest()
     data_source = StkDataKeeper()
