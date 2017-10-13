@@ -144,7 +144,7 @@ class StkHelperData(PickleEnabler):
             with open(filename, 'w') as f:
                 pickle.dump((self.stk_code, self.seqential_status_map), f)
                 return True
-        finally:
+        except:
             return False
 
     # load data
@@ -153,7 +153,7 @@ class StkHelperData(PickleEnabler):
             with open(filename, 'r') as f:
                 self.stk_code, self.seqential_status_map = pickle.load(filename)
             return True
-        finally:
+        except:
             return False
 
     # update data with recent transactions
@@ -202,18 +202,20 @@ class StkDataKeeper(object):
 
     # get data from given csv
     # return a formatted DataFrame object
-    def read_csv(self, filename="", with_head=True, index=["date", "time"]):
+    def read_csv(self, filename="", with_head=True, head_names=[], index="", ):
         try:
             # if the original data has no index definition, then needs to set the index, else just honor the existing index
             if with_head:
-                result_df = pd.read_csv(filename)
+                result_df = pd.read_csv(filename, dtype={"code":str})
+
             else:
-                hist_names = ['date', 'time', 'open', 'high', 'low', 'close', 'volume', 'total']
-                result_df = pd.read_csv(filename, names=hist_names)
+                if head_names == []:
+                    head_names = ['date', 'time', 'open', 'high', 'low', 'close', 'volume', 'total']
+                result_df = pd.read_csv(filename, names=head_names)
+            if index != "":
+                result_df.set_index(index, inplace=True)
 
-            result_df.set_index(index, inplace=True)
-
-        finally:
+        except:
             return None
 
         return result_df
@@ -223,10 +225,15 @@ class StkDataKeeper(object):
     #
     # return formatted date & time indexed dataframe, with total estimation
     def read_csv_tu_5min(self, filename=""):
-        df = self.read_csv(filename, True, index="date")
-        self.splitDateTime(df)
-        # simulate the total with calculation
-        df["total"] = df["volume"]*100*(df["open"]+df["close"]+df["high"]+df["low"])/4
+        try:
+            df = self.read_csv(filename, True)
+            self.splitDateTime(df)
+            # simulate the total with calculation
+            df["total"] = df["volume"] * 100 * (df["open"] + df["close"] + df["high"] + df["low"]) / 4
+            df.set_index(["date", "time"], inplace=True)
+        except:
+            return None
+
         return df
 
     # date       open   close  high   low    volume  code
@@ -234,29 +241,18 @@ class StkDataKeeper(object):
     #
     # return: date indexed DataFrame
     def read_csv_tu_daily(self, filename=""):
-        df = self.read_csv(filename, True, index="date")
+        try:
+            df = self.read_csv(filename, True, index="date")
+            df["total"] = df["volume"] * 100 * (df["open"] + df["close"] + df["high"] + df["low"]) / 4
+        except:
+            return None
+
         return df
 
     # date time open high low close volume total
     # 2015/1/5 9:35 16.47 16.47 16.18 16.2 2355 3838604
     def read_csv_hist_5min(self, filename=""):
-        df = pd.read_csv(filename)
-        # if len(df.index) == 0: pass
-        #
-        # def splitDate(x):
-        #     return x.split(" ")[0]
-        #
-        # def splitTime(x):
-        #     return x.split(" ")[1]
-        #
-        # series_date = df.date.apply(splitDate)
-        # series_time = df.date.apply(splitTime)
-        #
-        # df["date"] = series_date
-        # df["time"] = series_time
-        # df["total"] = round((df["close"]+df["high"]+df["low"])*df["volume"]*100/3, 2)
-
-        df.set_index(["date", "time"], inplace=True)
+        df = self.read_csv(filename, with_head=True, index=["date", "time"])
         return df
 
     # merge data for data maintenance
@@ -273,9 +269,19 @@ class StkDataKeeper(object):
 
             return True
 
-        finally:
+        except:
             print("error: " + new_file)
             return False
+
+    def merge_df(self, df_base, df_new, filename=""):
+        try:
+            merged_df = df_base.append(df_new)
+            merged_df.drop_duplicates(inplace=True)
+            merged_df.to_csv(filename)
+        except:
+            return False
+
+        return True
 
     # get realtime transaction
     # for specific code, or all when code = ""
@@ -309,11 +315,11 @@ def testPickle():
     df = pickle_test.df.append(pickle_test_new.df).drop_duplicates()
     print(df)
 
-if __name__ == "__main__":
+def test_pickle_helpdata():
     data_keeper = StkDataKeeper()
     # df = data_keeper.read_csv("stksample\\20170929_150000.csv", index="code")
     # print(df)
-    df = data_keeper.read_csv_hist_5min("stksample\\SZ300191.csv")
+    df = data_keeper.read_csv_hist_5min("stksample//SZ300191.csv")
     print(df)
 
     helper_data = StkHelperData()
@@ -322,8 +328,46 @@ if __name__ == "__main__":
     p1 = pickle.dumps(helper_data)
     helper_data_new = pickle.loads(p1)
     print(helper_data_new.seqential_status_map.keys())
-    # helper_data.save_data("stksample\\300191_helper.save")
-    # helper_data_restore = StkHelperData()
-    # helper_data_restore.load_data("data\\300191_helper.save")
-    # print(helper_data_restore.seqential_status_map.keys())
+
+def test_csv_readers():
+
+    sample_dir = os.path.abspath("stksample")
+
+    data_keeper = StkDataKeeper()
+    test_file = os.path.join(sample_dir, "SZ300191.csv")
+    df = data_keeper.read_csv(test_file, index="date")
+    df = df.set_index("time", append=True)
+    print(df.head())
+
+    test_file = os.path.join(sample_dir, "5min_300191.csv")
+    df = data_keeper.read_csv_tu_5min(test_file)
+    print(df.head())
+
+    test_file = os.path.join(sample_dir, "day_300191.csv")
+    df = data_keeper.read_csv_tu_daily(test_file)
+    print(df.head())
+
+    test_file = os.path.join(sample_dir, "SZ300191.csv")
+    df = data_keeper.read_csv_hist_5min(test_file)
+    print(df.head())
+
+def test_merge_df():
+
+    sample_dir = os.path.abspath("stksample")
+
+    data_keeper = StkDataKeeper()
+    test_file_base = os.path.join(sample_dir, "SZ300191.csv")
+    test_file_new = os.path.join(sample_dir, "5min_300191.csv")
+    df_base = data_keeper.read_csv_hist_5min(test_file_base)
+    df_new = data_keeper.read_csv_tu_5min(test_file_new)
+    data_keeper.merge_df(df_base, df_new, "result.csv")
+
+    df = data_keeper.read_csv_hist_5min("result.csv")
+    print(df.head(), df.tail())
+
+    data_keeper.merge_df(df_new, df_base, "result.csv")
+    df = data_keeper.read_csv_hist_5min("result.csv")
+    print(df.head(), df.tail())
+
+if __name__ == "__main__":
 
