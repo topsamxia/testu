@@ -178,7 +178,20 @@ class StkDataKeeper(object):
 
         # properties
         self.helper_data={}  # code -> StkHelperData
-        pass
+
+        self.stock_list=[]
+        if code_list_file != "":
+            self.load_stock_list(code_list_file)
+
+        # to implement - load data from folder
+
+    def load_stock_list(self, code_list_file=""):
+        if code_list_file != "":
+            stk_df = self.get_stock_basics_file(code_list_file)
+        else:
+            stk_df = self.get_stock_basics_tu()
+        self.stock_list = stk_df.index.tolist()
+
 
 
     def save_to_folder(self, data_folder=""):
@@ -200,18 +213,19 @@ class StkDataKeeper(object):
         df["date"] = series_date
         df["time"] = series_time
 
+
     # get data from given csv
     # return a formatted DataFrame object
     def read_csv(self, filename="", with_head=True, head_names=[], index="", ):
         try:
             # if the original data has no index definition, then needs to set the index, else just honor the existing index
             if with_head:
-                result_df = pd.read_csv(filename, dtype={"code":str})
+                result_df = pd.read_csv(filename, dtype={"code":str}, encoding="utf-8")
 
             else:
                 if head_names == []:
                     head_names = ['date', 'time', 'open', 'high', 'low', 'close', 'volume', 'total']
-                result_df = pd.read_csv(filename, names=head_names)
+                result_df = pd.read_csv(filename, names=head_names, dtype={"code":str}, encoding="utf-8")
             if index != "":
                 result_df.set_index(index, inplace=True)
 
@@ -219,6 +233,7 @@ class StkDataKeeper(object):
             return None
 
         return result_df
+
 
     # date             open   close  high   low    volume  code
     # 2014-11-17 14:55 21.946 22.305 22.465 21.047 33923.0 300191
@@ -230,11 +245,17 @@ class StkDataKeeper(object):
             self.splitDateTime(df)
             # simulate the total with calculation
             df["total"] = df["volume"] * 100 * (df["open"] + df["close"] + df["high"] + df["low"]) / 4
+            df["date"] = [c.replace('-', '/') for c in df["date"]]  # this doesnt' work - df["date"].replace('-', '/')
+            df["code"] = [("0"*(6-len(c))+c) for c in df["code"]] # add missing "0" if any
+
             df.set_index(["date", "time"], inplace=True)
+
+            # df.index = pd.MultiIndex.from_tuples([(x[0].replace('/', '-'), x[1]) for x in df.index])
         except:
             return None
 
         return df
+
 
     # date       open   close  high   low    volume  code
     # 2014-11-17 21.946 22.305 22.465 21.047 33923.0 300191
@@ -249,11 +270,29 @@ class StkDataKeeper(object):
 
         return df
 
+
     # date time open high low close volume total
     # 2015/1/5 9:35 16.47 16.47 16.18 16.2 2355 3838604
     def read_csv_hist_5min(self, filename=""):
         df = self.read_csv(filename, with_head=True, index=["date", "time"])
         return df
+
+    # get the stock list from online interface, and store it to given file
+    # return DataFrame
+    def get_stock_basics_tu(self, filename=""):
+        stock_basics = ts.get_stock_basics()
+        if filename != "":
+            stock_basics.to_csv(filename, encoding="utf-8")
+        return stock_basics
+
+
+    def get_stock_basics_file(self, filename=""):
+        try:
+            df = self.read_csv(filename, True)
+            df.set_index("code", inplace=True)
+            return df
+        except:
+            return None
 
     # merge data for data maintenance
     # if daily data then index = ["date"]
@@ -264,7 +303,7 @@ class StkDataKeeper(object):
             old_pd = self.read_csv(base_file, index=index)
 
             new_pd = old_pd.append(new_pd)
-            new_pd.drop_duplicates(inplace=True)
+            new_pd = self.drop_duplicate(new_pd)
             new_pd.to_csv(target_file)
 
             return True
@@ -273,15 +312,143 @@ class StkDataKeeper(object):
             print("error: " + new_file)
             return False
 
+
     def merge_df(self, df_base, df_new, filename=""):
         try:
             merged_df = df_base.append(df_new)
-            merged_df.drop_duplicates(inplace=True)
+            merged_df = self.drop_duplicate(merged_df)
             merged_df.to_csv(filename)
         except:
             return False
 
         return True
+
+
+    # add the code column according to the filename. Maintenance for the purchased data
+    def add_code_single(self, input_filename="", target_filename="", stock_only=False, stock_record_file="stock_basics.csv"):
+        try:
+            stk_keeper = sd.StkDataKeeper()
+            code = input_filename.split(".")[0][-6:]
+            if stock_only:
+                stock_df = stk_keeper.load_stock_list(stock_record_file)
+                stock_list = stock_df.index.tolist()
+                if code not in stock_list:
+                    return ("cannot find this stock: " + input_filename)
+
+            df = stk_keeper.read_csv_hist_5min(input_filename)
+            df["code"] = code
+            df.to_csv(target_filename, encoding="utf-8")
+            return "done"
+
+        except:
+            return ("fail: " + input_filename)
+
+
+    # add code column for all files under given folder. Maintenance for the purchased data
+    def add_code_folder(self, base_dir="", target_dir=""):
+
+        file_list = os.listdir(base_dir)
+
+        result = []
+        with concurrent.futures.ProcessPoolExecutor(max_workers=15) as executor:
+            for file_name in file_list:
+                base_file = os.path.join(base_dir, file_name)
+                target_file = os.path.join(target_dir, file_name)
+
+                obj = executor.submit(self.add_code_single, base_file, target_file)
+                result.append(obj)
+
+        for obj in result:
+            if obj.result() != "done":
+                print(obj.result())
+
+
+    def drop_duplicate(self, df):
+        return df[~df.index.duplicated(keep='last')]
+
+
+    def merge_hist_with_daily_single(self, hist_file="", daily_file="", target_file=""):
+        inline_debug = False
+        if target_file=="": return [hist_file, daily_file, target_file]
+
+        try:
+            # if only one source is provided, then save it directly
+            if hist_file=="" or daily_file=="":
+                if daily_file!="":
+                    df = self.read_csv_tu_5min(daily_file)
+                else:
+                    df = self.read_csv_hist_5min(hist_file)
+                df.to_csv(target_file)
+
+            # else all three inputs are ready
+            else:
+                hist_df = self.read_csv_hist_5min(hist_file)
+                daily_df = self.read_csv_tu_5min(daily_file)
+
+                if inline_debug:# debug code goes here
+                    hist_df.to_csv("hist_df.csv")
+                    daily_df.to_csv("daily_df.csv")
+
+                new_df = hist_df.append(daily_df)
+
+                if inline_debug:
+                    print (len(hist_df.index), len(daily_df.index), len(new_df.index))
+                    new_df.to_csv(target_file+".csv")
+
+                new_df = self.drop_duplicate(new_df)
+                # new_df.drop_duplicates(inplace=True)
+
+                if inline_debug:
+                    print(len(new_df.index))
+
+                new_df.to_csv(target_file)
+                return []
+        except:
+            return [hist_file, daily_file, target_file]
+
+
+    def merge_hist_with_daily_folder(self, hist_dir, daily_dir, target_dir):
+
+        if self.stock_list == []:
+            self.load_stock_list()
+
+        hist_file_list = os.listdir(hist_dir)
+        daily_files_list = os.listdir(daily_dir)
+
+        hist_map = {}
+        for hist_file in hist_file_list:
+            code = hist_file[-10:-4]
+            if code in self.stock_list:
+                if ((is_SH(code) and hist_file[:2]=="SH")
+                    or (is_SZ(code) and hist_file[:2]=="SZ")):
+                    hist_map[code] = hist_file
+                # else is something else
+
+        daily_map = {}
+        for daily_file in daily_files_list:
+            code = daily_file[-10:-4]
+            daily_map[code] = daily_file
+
+        results = []
+        with concurrent.futures.ProcessPoolExecutor(max_workers=15) as executor:
+            for code in daily_map.keys():
+                daily_file = os.path.join(daily_dir, daily_map[code])
+                prefix = "SH" if is_SH(code) else "SZ"
+                target_file = os.path.join(target_dir, prefix+code+'.csv')
+
+                if code in hist_map.keys():
+                    hist_file = os.path.join(hist_dir, hist_map[code])
+                else:
+                    hist_file = ""
+
+                # self.merge_hist_with_daily_single(hist_file, daily_file, target_file)
+                obj = executor.submit(self.merge_hist_with_daily_single, hist_file, daily_file, target_file)
+                results.append(obj)
+
+
+        for obj in results:
+            if obj.result() != []:
+                print(obj.result())
 
     # get realtime transaction
     # for specific code, or all when code = ""
@@ -292,15 +459,26 @@ class StkDataKeeper(object):
             df = ts.get_realtime_quotes(code)
         return df
 
+
     # update realtime transaction
     # append the recent transaction to the analysis
     def update_realtime_transaction(self, code=""):
         pass
 
+
     # Update the helper data with additional transaction calculation results
     # inout is either file of new daily transaction or realtime data
     def load_helper_data(self, folder_name="", df=None):
         pass
+
+
+def is_SH(code=""):
+    if len(code) != 6: return False
+    return True if code[:2]=="60" else False
+
+def is_SZ(code=""):
+    if len(code) != 6: return False
+    return True if code[:2]=="00" or code[:3]=="300" else False
 
 def testPickle():
     pickle_test = PickleDataTest()
@@ -315,7 +493,7 @@ def testPickle():
     df = pickle_test.df.append(pickle_test_new.df).drop_duplicates()
     print(df)
 
-def test_pickle_helpdata():
+def test_pickle_help_data():
     data_keeper = StkDataKeeper()
     # df = data_keeper.read_csv("stksample\\20170929_150000.csv", index="code")
     # print(df)
@@ -369,5 +547,36 @@ def test_merge_df():
     df = data_keeper.read_csv_hist_5min("result.csv")
     print(df.head(), df.tail())
 
+def test_stk_stock_basics():
+    stk_keeper = StkDataKeeper()
+    df = stk_keeper.get_stock_basics_tu("stock_basics.csv")
+    print(df.head(), df.tail())
+    df1 = stk_keeper.get_stock_basics_file("stock_basics.csv")
+    print(df1.head(), df1.tail())
+
+def set_pandas_format():
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+
 if __name__ == "__main__":
+
+    set_pandas_format()
+
+    stk_keeper = StkDataKeeper(code_list_file="stock_basics.csv")
+
+    # hist_file = "D://stock//SZ000001.csv"
+    # daily_file = "D://stock//accumulated_data//20171013//fivemin/5min_000001.csv"
+    # target_file = "D://stock//SZ000001.csv"
+    #
+    # stk_keeper.merge_hist_with_daily_single(hist_file, daily_file, target_file)
+
+    hist_dir = "D://stock//stk_new"
+    daily_dir = "D://stock//accumulated_data//20170930//fivemin"
+    target_dir = "D://stock//stk_new"
+
+    now = datetime.datetime.now()
+
+    # stk_keeper.merge_hist_with_daily_folder(hist_dir, daily_dir, target_dir)
+    time.sleep(3)
+    print((datetime.datetime.now() - now))
 
