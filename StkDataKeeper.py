@@ -1,9 +1,10 @@
 import pandas as pd
-import numpy as np
 import tushare as ts
+import pyecharts as pec
 import os, time, datetime
 import concurrent.futures
 import json, pickle
+
 
 # pickle can be done by
 # explicit pickle every property and make them a dictionary, then call pickle
@@ -471,6 +472,88 @@ class StkDataKeeper(object):
     def load_helper_data(self, folder_name="", df=None):
         pass
 
+class StkDiagram(object):
+    'Utility class that accepts the dataframe and paint set of klines'
+
+    def __init__(self):
+        pass
+
+    # Known limitation - cannot paint double axis diagrams
+    def paint_grid(self, diagram_coll=[], column=3, margin = 3.0, unit_width=600, unit_height=400):
+
+        if len(diagram_coll) == 0:
+            return None
+        row = len(diagram_coll) // column + (1 if len(diagram_coll) % column != 0 else 0)
+
+        # every cell is grid_top, grid_bottom, grid_left, grid_right
+        positioning = []
+        pos_unit = 100 / column
+        height_unit = 100 / row
+        for i_row in range(row):
+            for j_col in range(column):
+                positioning.append(["{0:.0f}%".format(height_unit * i_row + margin),
+                                    "{0:.0f}%".format(100 - height_unit * (i_row + 1) + margin),
+                                    "{0:.0f}%".format(pos_unit * j_col + margin),
+                                    "{0:.0f}%".format(100 - pos_unit * (j_col + 1) + margin)])
+
+        grid = pec.Grid(width=unit_width*column, height=unit_height*row)
+        for i, diagram in enumerate(diagram_coll):
+            grid.add(diagram,
+                     grid_top=positioning[i][0],
+                     grid_bottom=positioning[i][1],
+                     grid_left=positioning[i][2],
+                     grid_right=positioning[i][3])
+        grid.render("C:\\Users\\samx\\PycharmProjects\\index.html")
+        return grid
+
+    def paint_page(self, diagram_coll=[]):
+        page = pec.Page()
+        [page.add(diagram) for diagram in diagram_coll]
+        return page
+
+
+    def paint_kline(self, sk_code="300191", target_file="", tail=24, no_volume=False):
+        df = None
+        try:
+            df = ts.get_k_data(sk_code)
+            df.set_index("date", inplace=True)
+            if tail != 0:
+                df = df[-(tail):]
+        except:
+            if df == None: return None
+
+        v_label = []
+        v_kline = []
+        v_line = []
+        v_volume = []
+        for index in df.index:
+            v_kline.append([df.loc[index].open,
+                            df.loc[index].close,
+                            df.loc[index].low,
+                            df.loc[index].high])
+            v_label.append(index)
+            v_volume.append(df.loc[index].volume)
+            v_line.append(df.loc[index].close)
+
+        kline = pec.Kline(sk_code)
+        kline.add("", v_label, v_kline)
+        # kline.render("C:\\Users\\samx\\PycharmProjects\\kline.html")
+        line = pec.Line(sk_code)
+        line.add("", v_label, v_line, yaxis_min=min(v_line))
+        #line.render("C:\\Users\\samx\\PycharmProjects\\line.html")
+        bar = pec.Bar(sk_code)
+        bar.add("", v_label, v_volume, yaxis_max=max(v_volume)*5)
+        #bar.render("C:\\Users\\samx\\PycharmProjects\\bar.html")
+
+        overlap = pec.Overlap()
+        overlap.add(line)
+        overlap.add(kline)
+        if not no_volume:
+            overlap.add(bar, is_add_yaxis=True, yaxis_index=1)
+        if target_file != "":
+            overlap.render(target_file)
+
+        return overlap
 
 def is_SH(code=""):
     if len(code) != 6: return False
@@ -554,6 +637,28 @@ def test_stk_stock_basics():
     df1 = stk_keeper.get_stock_basics_file("stock_basics.csv")
     print(df1.head(), df1.tail())
 
+def test_stk_daily_batch_merge():
+    stk_keeper = StkDataKeeper(code_list_file="stock_basics.csv")
+    hist_dir = "D://stock//stk_new"
+    daily_dir = "D://stock//accumulated_data//20170930//fivemin"
+    target_dir = "D://stock//stk_new"
+    now = datetime.datetime.now()
+
+    stk_keeper.merge_hist_with_daily_folder(hist_dir, daily_dir, target_dir)
+    time.sleep(3)
+    print((datetime.datetime.now() - now))
+
+def test_stk_diagram():
+    stk_diagram = StkDiagram()
+    stk_list = ['000418', '002194', '002846', '300176', '300425', '300707']
+    diagram_list = []
+    for stk in stk_list:
+        kline = stk_diagram.paint_kline(stk, no_volume=True)
+        # kline.render(stk+".html")
+        diagram_list.append(kline)
+    grid = stk_diagram.paint_grid(diagram_list)
+    grid.render()
+
 def set_pandas_format():
     pd.set_option('display.max_columns', None)
     pd.set_option('display.width', None)
@@ -562,21 +667,4 @@ if __name__ == "__main__":
 
     set_pandas_format()
 
-    stk_keeper = StkDataKeeper(code_list_file="stock_basics.csv")
-
-    # hist_file = "D://stock//SZ000001.csv"
-    # daily_file = "D://stock//accumulated_data//20171013//fivemin/5min_000001.csv"
-    # target_file = "D://stock//SZ000001.csv"
-    #
-    # stk_keeper.merge_hist_with_daily_single(hist_file, daily_file, target_file)
-
-    hist_dir = "D://stock//stk_new"
-    daily_dir = "D://stock//accumulated_data//20170930//fivemin"
-    target_dir = "D://stock//stk_new"
-
-    now = datetime.datetime.now()
-
-    # stk_keeper.merge_hist_with_daily_folder(hist_dir, daily_dir, target_dir)
-    time.sleep(3)
-    print((datetime.datetime.now() - now))
 
