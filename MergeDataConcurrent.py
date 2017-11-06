@@ -7,8 +7,8 @@ import multiprocessing
 
 
 
-old_dir= os.path.abspath("D:\stock\merge_data\data_base")
-new_dir = os.path.abspath("D:\stock\merge_data\data_new")
+old_dir= os.path.abspath("D:\stock\stk_new_update")
+new_dir = os.path.abspath("D:\stock\stk_update_incremental")
 target_dir = os.path.abspath("D:\stock\merge_data\data_result")
 
 new_files = os.listdir(new_dir)

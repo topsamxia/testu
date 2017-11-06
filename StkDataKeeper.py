@@ -179,7 +179,7 @@ class StkDataKeeper(object):
 
         # properties
         self.helper_data={}  # code -> StkHelperData
-
+        self.stock_basics=None
         self.stock_list=[]
         if code_list_file != "":
             self.load_stock_list(code_list_file)
@@ -188,10 +188,10 @@ class StkDataKeeper(object):
 
     def load_stock_list(self, code_list_file=""):
         if code_list_file != "":
-            stk_df = self.get_stock_basics_file(code_list_file)
+            self.stock_basics = self.get_stock_basics_file(code_list_file)
         else:
-            stk_df = self.get_stock_basics_tu()
-        self.stock_list = stk_df.index.tolist()
+            self.stock_basics = self.get_stock_basics_tu()
+        self.stock_list = self.stock_basics.index.tolist()
 
 
 
@@ -278,22 +278,34 @@ class StkDataKeeper(object):
         df = self.read_csv(filename, with_head=True, index=["date", "time"])
         return df
 
+
     # get the stock list from online interface, and store it to given file
     # return DataFrame
     def get_stock_basics_tu(self, filename=""):
-        stock_basics = ts.get_stock_basics()
-        if filename != "":
-            stock_basics.to_csv(filename, encoding="utf-8")
-        return stock_basics
+        if not (self.stock_basics is None):
+            return self.stock_basics
+        else:
+            self.stock_basics = ts.get_stock_basics()
+            if filename != "":
+                self.stock_basics.to_csv(filename, encoding="utf-8")
+            return self.stock_basics
 
 
     def get_stock_basics_file(self, filename=""):
         try:
-            df = self.read_csv(filename, True)
-            df.set_index("code", inplace=True)
-            return df
+            self.stock_basics = self.read_csv(filename, True)
+            self.stock_basics.set_index("code", inplace=True)
+            return self.stock_basics
         except:
             return None
+
+    def get_stock_outstanding(self, stk_code):
+        try:
+            if self.stock_basics is None:
+                self.load_stock_list()
+            return self.stock_basics.loc[stk_code].outstanding * 100000000 / 100
+        except:
+            return 0.0
 
     # merge data for data maintenance
     # if daily data then index = ["date"]
@@ -368,7 +380,7 @@ class StkDataKeeper(object):
         return df[~df.index.duplicated(keep='last')]
 
 
-    def merge_hist_with_daily_single(self, hist_file="", daily_file="", target_file=""):
+    def merge_hist_with_daily_single(self, hist_file="", daily_file="", target_file="", isIncrementalTu=True):
         inline_debug = False
         if target_file=="": return [hist_file, daily_file, target_file]
 
@@ -376,7 +388,10 @@ class StkDataKeeper(object):
             # if only one source is provided, then save it directly
             if hist_file=="" or daily_file=="":
                 if daily_file!="":
-                    df = self.read_csv_tu_5min(daily_file)
+                    if isIncrementalTu:
+                        df = self.read_csv_tu_5min(daily_file)
+                    else:
+                        df = self.read_csv_hist_5min(daily_file)
                 else:
                     df = self.read_csv_hist_5min(hist_file)
                 df.to_csv(target_file)
@@ -384,7 +399,10 @@ class StkDataKeeper(object):
             # else all three inputs are ready
             else:
                 hist_df = self.read_csv_hist_5min(hist_file)
-                daily_df = self.read_csv_tu_5min(daily_file)
+                if isIncrementalTu:
+                    daily_df = self.read_csv_tu_5min(daily_file)
+                else:
+                    daily_df = self.read_csv_hist_5min(daily_file)
 
                 if inline_debug:# debug code goes here
                     hist_df.to_csv("hist_df.csv")
@@ -407,8 +425,9 @@ class StkDataKeeper(object):
         except:
             return [hist_file, daily_file, target_file]
 
-
-    def merge_hist_with_daily_folder(self, hist_dir, daily_dir, target_dir):
+    # isIncrementalSource = True means the source is from TuShare so the format is converted
+    # isIncrementalSource = False means the source is also in format of history, which is data merge operation
+    def merge_hist_with_daily_folder(self, hist_dir, daily_dir, target_dir, isIncrementalSource=True):
 
         if self.stock_list == []:
             self.load_stock_list()
@@ -443,7 +462,7 @@ class StkDataKeeper(object):
                     hist_file = ""
 
                 # self.merge_hist_with_daily_single(hist_file, daily_file, target_file)
-                obj = executor.submit(self.merge_hist_with_daily_single, hist_file, daily_file, target_file)
+                obj = executor.submit(self.merge_hist_with_daily_single, hist_file, daily_file, target_file, isIncrementalSource)
                 results.append(obj)
 
 
@@ -667,4 +686,17 @@ if __name__ == "__main__":
 
     set_pandas_format()
 
+    # mark_done_get = datetime.datetime.now()
+    #
+    # hist_dir = os.path.abspath("D:\stock\stk_new_update")
+    # daily_dir = os.path.abspath("D:\stock\stk_update_incremental")
+    # target_dir = os.path.abspath("D:\stock\stk_new_merge")
+    #
+    # stk_keeper = StkDataKeeper()
+    # stk_keeper.load_stock_list()
+    # stk_keeper.merge_hist_with_daily_folder(hist_dir, daily_dir, target_dir, False)
+    # print("Refresh data in: " + str(datetime.datetime.now() - mark_done_get))
 
+    stk_keeper = StkDataKeeper()
+    print(stk_keeper.get_stock_basics_tu().head())
+    print(stk_keeper.stock_basics.tail())
