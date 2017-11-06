@@ -529,7 +529,6 @@ class StkDiagram(object):
 
         if len(diagram_coll) == 0:
             return None
-        row = len(diagram_coll) // column + (1 if len(diagram_coll) % column != 0 else 0)
 
         # every cell is grid_top, grid_bottom, grid_left, grid_right
         positioning = []
@@ -567,22 +566,24 @@ class StkDiagram(object):
         for i in range(diagram_per_stk):
             diagram_positioning = []
 
+            first_diagram_ratio = 2
+
             if i == 0:
                 reserve_up = 0
                 # first is larger than rest diagrams
                 # reserve room for rest diagrams
-                reserve_down = (height_unit - (margin*2)) / (diagram_per_stk+1) * (diagram_per_stk-i-1)
+                reserve_down = (height_unit - (margin*2)) / (diagram_per_stk+first_diagram_ratio-1) * (diagram_per_stk-i-1)
             else:
-                reserve_up = (height_unit - (margin*2))/(diagram_per_stk+1)*(i+1)
-                reserve_down = (height_unit - (margin*2))/(diagram_per_stk+1)*(diagram_per_stk-i-1)
+                reserve_up = (height_unit - (margin*2))/(diagram_per_stk+first_diagram_ratio-1)*(i+first_diagram_ratio-1)
+                reserve_down = (height_unit - (margin*2))/(diagram_per_stk+first_diagram_ratio-1)*(diagram_per_stk-i-1)
 
             # every cell is grid_top, grid_bottom, grid_left, grid_right
             for i_row in range(row):
                 for j_col in range(column):
-                    diagram_positioning.append(["{0:.0f}%".format(height_unit * i_row + margin + reserve_up),
-                                        "{0:.0f}%".format(100 - height_unit * (i_row + 1) + margin + reserve_down),
-                                        "{0:.0f}%".format(pos_unit * j_col + margin),
-                                        "{0:.0f}%".format(100 - pos_unit * (j_col + 1) + margin)])
+                    diagram_positioning.append(["{0:.1f}%".format(height_unit * i_row + margin + reserve_up),
+                                                "{0:.1f}%".format(100 - height_unit * (i_row + 1) + margin + reserve_down),
+                                                "{0:.1f}%".format(pos_unit * j_col + margin),
+                                                "{0:.1f}%".format(100 - pos_unit * (j_col + 1) + margin)])
             overall_positioning.append(diagram_positioning)
 
         return overall_positioning
@@ -706,6 +707,33 @@ class StkDiagram(object):
             return overlap
         else:
             return kline
+
+    def paint_klines(self, stock_list, stock_basics_file="", unit_width=600, unit_height=600):
+
+        positioning = self.paint_grid_helper(len(stock_list), 3, 3, 1.0)
+
+        stk = StkDataKeeper()
+        stk.load_stock_list(stock_basics_file)
+
+        kline_collection = []
+        volume_collection = []
+        time_collection = []
+        for i, stock in enumerate(stock_list):
+            stk_name = stk.stock_basics.loc[stock][0]
+            kline = self.paint_date_kline(stock, stk_name, with_volume=False, title_top=positioning[0][i][0],
+                                             title_pos=positioning[0][i][2])
+            kline_collection.append(kline)
+            volume = self.paint_date_volume(stock, stk_name, title_top=positioning[1][i][0],
+                                               title_pos=positioning[1][i][2])
+            volume_collection.append(volume)
+            fenshi = self.paint_time_kline(stock, stk_name, with_volume=False, title_top=positioning[2][i][0],
+                                              title_pos=positioning[2][i][2])
+            time_collection.append(fenshi)
+
+        grid = self.paint_grid_enhanced(kline_collection, volume_collection, time_collection, margin=1.0,
+                                        unit_width=unit_width,
+                                        unit_height=unit_height)
+        return grid
 
 def is_SH(code=""):
     if len(code) != 6: return False
@@ -837,22 +865,7 @@ if __name__ == "__main__":
     painter = StkDiagram()
     stock_list = ['002156', '002409', '002848', '300176', '300220', '300474', '300531', '300706', '603466', '603533', '603559', '603929', '603986', '002806', '603683', '603131']
 
-    positioning = painter.paint_grid_helper(len(stock_list), 3, 3, 1.0)
 
-    stk = StkDataKeeper()
-    stk.load_stock_list("stock_basics.csv")
-
-    kline_collection=[]
-    volume_collection=[]
-    time_collection=[]
-    for i, stock in enumerate(stock_list):
-        stk_name = stk.stock_basics.loc[stock][0]
-        kline = painter.paint_date_kline(stock, stk_name, with_volume=False, title_top=positioning[0][i][0], title_pos=positioning[0][i][2])
-        kline_collection.append(kline)
-        volume = painter.paint_date_volume(stock, stk_name, title_top=positioning[1][i][0], title_pos=positioning[1][i][2])
-        volume_collection.append(volume)
-        fenshi = painter.paint_time_kline(stock, stk_name, with_volume=False, title_top=positioning[2][i][0], title_pos=positioning[2][i][2])
-        time_collection.append(fenshi)
-
-    grid = painter.paint_grid_enhanced(kline_collection, volume_collection, time_collection, margin = 1.0)
+    grid = painter.paint_klines(stock_list, "stock_basics.csv", 300, 400)
     grid.render("C:\\Users\\samx\\PycharmProjects\\index.html")
+
