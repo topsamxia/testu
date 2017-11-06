@@ -283,6 +283,8 @@ class StkDataKeeper(object):
     # return DataFrame
     def get_stock_basics_tu(self, filename=""):
         if not (self.stock_basics is None):
+            if filename != "":
+                self.stock_basics.to_csv(filename, encoding="utf-8")
             return self.stock_basics
         else:
             self.stock_basics = ts.get_stock_basics()
@@ -306,6 +308,31 @@ class StkDataKeeper(object):
             return self.stock_basics.loc[stk_code].outstanding * 100000000 / 100
         except:
             return 0.0
+
+    def get_stock_data(self, sk_code="300191", source_file="", daily_T_fivemin_F=True, tail=0):
+        df = None
+        try:
+            if source_file == "":
+                if daily_T_fivemin_F:
+                    df = ts.get_k_data(sk_code)
+                else:
+                    df = ts.get_k_data(sk_code, ktype='5')
+                df.set_index("date", inplace=True)
+            else:
+                if daily_T_fivemin_F:
+                    self.read_csv_tu_daily(source_file)
+                else:
+                    self.read_csv_hist_5min(source_file)
+
+            # trim the data
+            if tail != 0:
+                df = df[-(tail):]
+
+            return df
+
+        except:
+            if df == None: return None
+
 
     # merge data for data maintenance
     # if daily data then index = ["date"]
@@ -525,21 +552,127 @@ class StkDiagram(object):
         grid.render("C:\\Users\\samx\\PycharmProjects\\index.html")
         return grid
 
+
+    def paint_grid_helper(self, cell_numbers=0, diagram_per_stk=1, column=3, margin = 3.0):
+
+        if cell_numbers == 0: return []
+
+        row = cell_numbers // column + (1 if cell_numbers % column != 0 else 0)
+        pos_unit = 100 / column
+        height_unit = 100 / row
+
+        overall_positioning = []
+
+        # loop for every type of diagram
+        for i in range(diagram_per_stk):
+            diagram_positioning = []
+
+            if i == 0:
+                reserve_up = 0
+                # first is larger than rest diagrams
+                # reserve room for rest diagrams
+                reserve_down = (height_unit - (margin*2)) / (diagram_per_stk+1) * (diagram_per_stk-i-1)
+            else:
+                reserve_up = (height_unit - (margin*2))/(diagram_per_stk+1)*(i+1)
+                reserve_down = (height_unit - (margin*2))/(diagram_per_stk+1)*(diagram_per_stk-i-1)
+
+            # every cell is grid_top, grid_bottom, grid_left, grid_right
+            for i_row in range(row):
+                for j_col in range(column):
+                    diagram_positioning.append(["{0:.0f}%".format(height_unit * i_row + margin + reserve_up),
+                                        "{0:.0f}%".format(100 - height_unit * (i_row + 1) + margin + reserve_down),
+                                        "{0:.0f}%".format(pos_unit * j_col + margin),
+                                        "{0:.0f}%".format(100 - pos_unit * (j_col + 1) + margin)])
+            overall_positioning.append(diagram_positioning)
+
+        return overall_positioning
+
+    # Known limitation - cannot paint double axis diagrams
+    def paint_grid_enhanced(self,
+                            kline_coll=[], volume_coll=[], three_day_coll=[],
+                            column=3, margin=1.0, unit_width=600, unit_height=600):
+
+
+
+        if len(kline_coll) == 0 or len(volume_coll) == 0:
+            return None
+        row = len(kline_coll) // column + (1 if len(kline_coll) % column != 0 else 0)
+
+        # every cell is grid_top, grid_bottom, grid_left, grid_right
+        positioning = self.paint_grid_helper(len(kline_coll), 3, column, margin)
+
+        # positioning = []
+        # pos_unit = 100 / column
+        # height_unit = 100 / row
+        # for i_row in range(row):
+        #     for j_col in range(column):
+        #         positioning.append(["{0:.0f}%".format(height_unit * i_row + margin),
+        #                             "{0:.0f}%".format(100 - height_unit * (i_row + 1) + margin),
+        #                             "{0:.0f}%".format(pos_unit * j_col + margin),
+        #                             "{0:.0f}%".format(100 - pos_unit * (j_col + 1) + margin)])
+
+        grid = pec.Grid(width=unit_width * column, height=unit_height * row)
+
+        for i, diagram in enumerate(kline_coll):
+            grid.add(diagram,
+                     grid_top=positioning[0][i][0],
+                     grid_bottom=positioning[0][i][1],
+                     grid_left=positioning[0][i][2],
+                     grid_right=positioning[0][i][3])
+            grid.add(volume_coll[i],
+                     grid_top=positioning[1][i][0],
+                     grid_bottom=positioning[1][i][1],
+                     grid_left=positioning[1][i][2],
+                     grid_right=positioning[1][i][3])
+            grid.add(three_day_coll[i],
+                     grid_top=positioning[2][i][0],
+                     grid_bottom=positioning[2][i][1],
+                     grid_left=positioning[2][i][2],
+                     grid_right=positioning[2][i][3])
+
+        return grid
+
+
+
     def paint_page(self, diagram_coll=[]):
         page = pec.Page()
         [page.add(diagram) for diagram in diagram_coll]
         return page
 
+    def paint_date_kline(self, sk_code="300191", sk_name="", target_file="", tail=24, with_volume=False, title_top="0%", title_pos="0%"):
+        stk_keeper = StkDataKeeper()
+        df = stk_keeper.get_stock_data(sk_code, target_file, True, tail)
 
-    def paint_kline(self, sk_code="300191", target_file="", tail=24, no_volume=False):
-        df = None
-        try:
-            df = ts.get_k_data(sk_code)
-            df.set_index("date", inplace=True)
-            if tail != 0:
-                df = df[-(tail):]
-        except:
-            if df == None: return None
+        return self.paint_kline(df, with_volume, title_top, title_pos, sk_name)
+
+    def paint_date_volume(self, sk_code="300191", sk_name="", target_file="", tail=24, title_top="0%", title_pos="0%"):
+        stk_keeper = StkDataKeeper()
+        df = stk_keeper.get_stock_data(sk_code, target_file, True, tail)
+
+        return self.paint_volume(df, title_top, title_pos, sk_name)
+
+    def paint_time_kline(self, sk_code="300191", sk_name="", target_file="", tail=48, with_volume=False, title_top="0%", title_pos="0%"):
+        stk_keeper = StkDataKeeper()
+        df = stk_keeper.get_stock_data(sk_code, target_file, False, tail)
+
+        return self.paint_kline(df, with_volume, title_top, title_pos, sk_name)
+
+    def paint_volume(self, df, title_top="0%", title_pos="0%", stock_name=""):
+        sk_code = df.iloc[-1].code
+
+        v_label = []
+        v_volume = []
+        for index in df.index:
+            v_label.append(index)
+            v_volume.append(df.loc[index].volume)
+
+        bar = pec.Bar(sk_code+" "+stock_name, title_top=title_top, title_pos=title_pos)
+        bar.add("", v_label, v_volume)
+
+        return bar
+
+    def paint_kline(self, df, with_volume=False, title_top="0%", title_pos="0%", stock_name=""):
+        sk_code = df.iloc[-1].code
 
         v_label = []
         v_kline = []
@@ -554,25 +687,25 @@ class StkDiagram(object):
             v_volume.append(df.loc[index].volume)
             v_line.append(df.loc[index].close)
 
-        kline = pec.Kline(sk_code)
+        kline = pec.Kline(sk_code+" "+stock_name, title_top=title_top, title_pos=title_pos)
         kline.add("", v_label, v_kline)
         # kline.render("C:\\Users\\samx\\PycharmProjects\\kline.html")
-        line = pec.Line(sk_code)
-        line.add("", v_label, v_line, yaxis_min=min(v_line))
-        #line.render("C:\\Users\\samx\\PycharmProjects\\line.html")
-        bar = pec.Bar(sk_code)
-        bar.add("", v_label, v_volume, yaxis_max=max(v_volume)*5)
-        #bar.render("C:\\Users\\samx\\PycharmProjects\\bar.html")
 
-        overlap = pec.Overlap()
-        overlap.add(line)
-        overlap.add(kline)
-        if not no_volume:
+        if with_volume:
+            line = pec.Line(sk_code)
+            line.add("", v_label, v_line, yaxis_min=min(v_line))
+            #line.render("C:\\Users\\samx\\PycharmProjects\\line.html")
+            bar = pec.Bar(sk_code)
+            bar.add("", v_label, v_volume, yaxis_max=max(v_volume)*5)
+            #bar.render("C:\\Users\\samx\\PycharmProjects\\bar.html")
+
+            overlap = pec.Overlap()
+            overlap.add(line)
+            overlap.add(kline)
             overlap.add(bar, is_add_yaxis=True, yaxis_index=1)
-        if target_file != "":
-            overlap.render(target_file)
-
-        return overlap
+            return overlap
+        else:
+            return kline
 
 def is_SH(code=""):
     if len(code) != 6: return False
@@ -697,6 +830,29 @@ if __name__ == "__main__":
     # stk_keeper.merge_hist_with_daily_folder(hist_dir, daily_dir, target_dir, False)
     # print("Refresh data in: " + str(datetime.datetime.now() - mark_done_get))
 
-    stk_keeper = StkDataKeeper()
-    print(stk_keeper.get_stock_basics_tu().head())
-    print(stk_keeper.stock_basics.tail())
+    # stk_keeper = StkDataKeeper()
+    # print(stk_keeper.get_stock_basics_tu().head())
+    # print(stk_keeper.stock_basics.tail())
+
+    painter = StkDiagram()
+    stock_list = ['002156', '002409', '002848', '300176', '300220', '300474', '300531', '300706', '603466', '603533', '603559', '603929', '603986', '002806', '603683', '603131']
+
+    positioning = painter.paint_grid_helper(len(stock_list), 3, 3, 1.0)
+
+    stk = StkDataKeeper()
+    stk.load_stock_list("stock_basics.csv")
+
+    kline_collection=[]
+    volume_collection=[]
+    time_collection=[]
+    for i, stock in enumerate(stock_list):
+        stk_name = stk.stock_basics.loc[stock][0]
+        kline = painter.paint_date_kline(stock, stk_name, with_volume=False, title_top=positioning[0][i][0], title_pos=positioning[0][i][2])
+        kline_collection.append(kline)
+        volume = painter.paint_date_volume(stock, stk_name, title_top=positioning[1][i][0], title_pos=positioning[1][i][2])
+        volume_collection.append(volume)
+        fenshi = painter.paint_time_kline(stock, stk_name, with_volume=False, title_top=positioning[2][i][0], title_pos=positioning[2][i][2])
+        time_collection.append(fenshi)
+
+    grid = painter.paint_grid_enhanced(kline_collection, volume_collection, time_collection, margin = 1.0)
+    grid.render("C:\\Users\\samx\\PycharmProjects\\index.html")
