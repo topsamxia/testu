@@ -719,7 +719,11 @@ class StkDiagram(object):
         volume_collection = []
         time_collection = []
         for i, stock in enumerate(stock_list):
-            stk_name = stk.stock_basics.loc[stock][0]
+            try:
+                stk_name = stk.stock_basics.loc[stock][0]
+            except:
+                stk_name = ""
+
             kline = self.paint_date_kline(stock, stk_name + " " + str(i), with_volume=False, title_top=positioning[0][i][0],
                                              title_pos=positioning[0][i][2])
             kline_collection.append(kline)
