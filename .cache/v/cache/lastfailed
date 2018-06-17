@@ -1,0 +1,4 @@
+{
+  "StkDataKeeper.py::test_stk_daily_batch_merge": true,
+  "StkDataKeeper.py::test_stk_diagram": true
+}

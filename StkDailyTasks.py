@@ -65,19 +65,54 @@ def get_daily_data():
     print('done')
 
 def get_daily_chart(analysis_type=-1):
-    # determine 涨停
-    def isZhangting(s_df, index=-1):
-        if (s_df.iloc[index].close / s_df.iloc[index - 1].close) >= 1.099:
-            return True
+    # determine 上涨
+    def isShangzhang(s_df, index=-1, increase=0.02):
+        if len(s_df.index) >= abs(index) + 1:
+            return ((s_df.iloc[index].close / s_df.iloc[index - 1].close - 1) > increase)
         else:
             return False
 
+    # determine 涨停
+    def isZhangting(s_df, index=-1):
+        return isShangzhang(s_df, index, 0.098)
+        # # not enough data
+        # if len(stock_df.index) < (abs(index) + 1):
+        #     return False
+        #
+        # # return if shangzhang > 9.8%
+        # if (s_df.iloc[index].close / s_df.iloc[index - 1].close) >= 1.098:
+        #     return True
+        # else:
+        #     return False
+
     # determine 上涨
-    def isShangzhang(s_df, index=-1):
-        if len(s_df.index) >= (index) + 1:
-            return ((s_df.iloc[index].close / s_df.iloc[index - 1].close - 1) > 0.02)
+    def isXiadie(s_df, index=-1, increase=-0.02):
+        if len(s_df.index) >= abs(index) + 1:
+            return ((s_df.iloc[index].close / s_df.iloc[index - 1].close - 1) < increase)
         else:
             return False
+
+    def isDieting(s_df, index=-1):
+        return isXiadie(s_df, index, -0.098)
+
+
+    # determine 条件四
+    # 第一天涨停， 当中下跌2-3天，第四天涨
+    def isQualifiedCondition4(s_df, index=-1):
+        if len(stock_df.index) < (abs(index) + 3):
+            return False
+        if isZhangting(s_df, index-3) and isZhangting(s_df, index):
+            if isXiadie(s_df, index-2, -0.02) and isXiadie(s_df, index-1, -0.02):
+                return True
+
+        if len(stock_df.index) < (abs(index) + 4):
+            return False
+        if isZhangting(s_df, index-4) and isZhangting(s_df, index):
+            if isXiadie(s_df, index-3, -0.02) and isXiadie(s_df, index-2, -0.02) and isXiadie(s_df, index-1, -0.02) \
+                and ((s_df.iloc[index-1].close / s_df.iloc[index-4].close - 1) < -0.09):
+                return True
+
+        return False
 
     # determine 条件一
     def isQualifiedCondition1(s_df, index=-1):
@@ -113,7 +148,7 @@ def get_daily_chart(analysis_type=-1):
     print(time.strftime("%M:%S"))
 
     ########################################
-    datafolder_dir = os.getcwd() + "/current"
+    datafolder_dir = os.getcwd() + os.sep +"current"
     ########################################
 
     file_list = os.listdir(datafolder_dir)
@@ -133,13 +168,16 @@ def get_daily_chart(analysis_type=-1):
             stock_df = pd.read_csv(datafolder_dir + "/" + file)
             if isQualifiedCondition1(stock_df, analysis_type):
                 select_list.append("condition 1:" + completeCode(str(stock_df.iloc[0].code)))
-                file_dict[completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+                file_dict["1:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
             if isQualifiedCondition2(stock_df, analysis_type):
                 select_list.append("condition 2:" + completeCode(str(stock_df.iloc[0].code)))
-                file_dict[completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+                file_dict["2:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
             if isQualifiedCondition3(stock_df, analysis_type):
                 select_list.append("condition 3:" + completeCode(str(stock_df.iloc[0].code)))
-                file_dict[completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+                file_dict["3:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+            if isQualifiedCondition4(stock_df, analysis_type):
+                select_list.append("condition 4:" + completeCode(str(stock_df.iloc[0].code)))
+                file_dict["4:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
 
     select_list.sort()
 
@@ -148,7 +186,7 @@ def get_daily_chart(analysis_type=-1):
         print(file)
 
     for index in range(len(select_list)):
-        select_list[index] = select_list[index][-6:]
+        select_list[index] = select_list[index][-8:]
 
     print(select_list)
 
@@ -185,13 +223,16 @@ def get_daily_chart(analysis_type=-1):
             stock_df = pd.read_csv(datafolder_dir + "/" + file)
             if isQualifiedCondition1(stock_df, analysis_type):
                 select_list.append("condition 1:" + completeCode(str(stock_df.iloc[0].code)))
-                file_dict[completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+                file_dict["1:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
             if isQualifiedCondition2(stock_df, analysis_type):
                 select_list.append("condition 2:" + completeCode(str(stock_df.iloc[0].code)))
-                file_dict[completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+                file_dict["2:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
             if isQualifiedCondition3(stock_df, analysis_type):
                 select_list.append("condition 3:" + completeCode(str(stock_df.iloc[0].code)))
-                file_dict[completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+                file_dict["3:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
+            if isQualifiedCondition4(stock_df, analysis_type):
+                select_list.append("condition 4:" + completeCode(str(stock_df.iloc[0].code)))
+                file_dict["4:"+completeCode(str(stock_df.iloc[0].code))] = datafolder_dir + "/" + file
 
     select_list.sort()
 
@@ -200,7 +241,7 @@ def get_daily_chart(analysis_type=-1):
         print(file)
 
     for index in range(len(select_list)):
-        select_list[index] = select_list[index][-6:]
+        select_list[index] = select_list[index][-8:]
 
     print(select_list)
 
@@ -288,7 +329,11 @@ if __name__ == "__main__":
     # keeper = sk.StkDataKeeper()
     # keeper.get_stock_basics_tu("stock_basics.csv")
     # get_current()
-    ssch.scheduler_test_helper(get_time_current_data, second_interval="15")
-    ssch.sched.start()
-    while (1):
-        time.sleep(1000000)
+    # ssch.scheduler_test_helper(get_time_current_data, second_interval="15")
+    # ssch.sched.start()
+    # while (1):
+    #     time.sleep(1000000)
+    # get_current()
+    # print (os.sep)
+
+    get_daily_chart()
