@@ -102,14 +102,16 @@ def get_daily_chart(analysis_type=-1):
         if len(stock_df.index) < (abs(index) + 3):
             return False
         if isZhangting(s_df, index-3) and isZhangting(s_df, index):
-            if isXiadie(s_df, index-2, -0.02) and isXiadie(s_df, index-1, -0.02):
+            # if isXiadie(s_df, index-2, -0.02) and isXiadie(s_df, index-1, -0.02):
+            if (not isZhangting(s_df, index-2) and not isZhangting(s_df, index-1)):
                 return True
 
         if len(stock_df.index) < (abs(index) + 4):
             return False
-        if isZhangting(s_df, index-4) and isZhangting(s_df, index):
-            if isXiadie(s_df, index-3, -0.02) and isXiadie(s_df, index-2, -0.02) and isXiadie(s_df, index-1, -0.02) \
-                and ((s_df.iloc[index-1].close / s_df.iloc[index-4].close - 1) < -0.09):
+        if isZhangting(s_df, index-4) and isZhangting(s_df, index) and not isZhangting(s_df, index-3) and not isZhangting(s_df, index-2) and not isZhangting(s_df, index-1):
+            # if isXiadie(s_df, index-3, -0.02) and isXiadie(s_df, index-2, -0.02) and isXiadie(s_df, index-1, -0.02) \
+            #     and ((s_df.iloc[index-1].close / s_df.iloc[index-4].close - 1) < -0.09):
+            if ((s_df.iloc[index-1].close / s_df.iloc[index-4].close - 1) < -0.05):
                 return True
 
         return False
@@ -326,9 +328,9 @@ def update_stocklist():
     keeper.get_stock_basics_tu("stock_basics.csv")
 
 if __name__ == "__main__":
-    # keeper = sk.StkDataKeeper()
-    # keeper.get_stock_basics_tu("stock_basics.csv")
-    # get_current()
+    keeper = sk.StkDataKeeper()
+    keeper.get_stock_basics_tu("stock_basics.csv")
+    get_current()
     # ssch.scheduler_test_helper(get_time_current_data, second_interval="15")
     # ssch.sched.start()
     # while (1):
