@@ -23,9 +23,9 @@ def schedule_minute_helper(job_func, kwargs=None, minute_interval='5'):
     sched.add_job(job_func, 'cron', kwargs=kwargs, day_of_week='mon-fri', hour='11', minute=minute_30)
     # 10:00-10:59, 13:00-14:59
     minute_60 = '0-59/' + minute_interval
-    sched.add_job(job, 'cron', kwargs=kwargs, day_of_week='mon-fri', hour='10,13,14', minute=minute_60)
+    sched.add_job(job_func, 'cron', kwargs=kwargs, day_of_week='mon-fri', hour='10,13,14', minute=minute_60)
     # 15:00
-    sched.add_job(job, 'cron', kwargs=kwargs, day_of_week='mon-fri', hour='15', minute='0')
+    sched.add_job(job_func, 'cron', kwargs=kwargs, day_of_week='mon-fri', hour='15', minute='0')
 
 # Daily task
 def schedule_daily_helper(job_func, kwargs=None, jitter_min='10'):
