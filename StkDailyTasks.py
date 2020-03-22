@@ -101,7 +101,8 @@ def get_specific_day_chart(folder_name="", file_name_prefix="chart", split_unit=
     # 今天涨停，二三四天前也有涨停
     def isQualifiedCondition5(s_df, index=-1):
         if isZhangting(s_df, index):
-            if (isZhangting(s_df, index - 2) or isZhangting(s_df, index - 3) or isZhangting(s_df, index - 4)):
+            if (isZhangting(s_df, index - 2) or isZhangting(s_df, index - 3) or isZhangting(s_df, index - 4)
+                    or isZhangting(s_df, index - 5)):
                 return True
         return False
 
