@@ -331,8 +331,8 @@ class StkDataKeeper(object):
             return df
 
         except:
-            if df == None: return None
-
+            # if df == None: return None
+            if df.empty: return None
 
     # merge data for data maintenance
     # if daily data then index = ["date"]
@@ -673,6 +673,9 @@ class StkDiagram(object):
         return bar
 
     def paint_kline(self, df, with_volume=False, title_top="0%", title_pos="0%", stock_name=""):
+
+        if df is None: return None
+
         sk_code = df.iloc[-1].code
 
         v_label = []

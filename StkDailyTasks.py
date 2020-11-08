@@ -7,6 +7,7 @@ import threadpool
 import StkDataKeeper as sk
 import StkScheduler as ssch
 
+exclude_stock_list = ["300362",]
 
 def get_daily_data():
     # create folder
@@ -26,6 +27,10 @@ def get_daily_data():
         return df
 
     def obtain_daily_data(sk_code, target_dir=""):
+
+        if sk_code in exclude_stock_list:
+            return
+
         print("Processing: " + sk_code)
 
         if target_dir != "":
@@ -478,4 +483,4 @@ if __name__ == "__main__":
     # get_daily_data()
     get_daily_chart()
     # get_current()
-    get_daily_chart_current()
+    # get_daily_chart_current()
