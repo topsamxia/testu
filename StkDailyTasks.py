@@ -238,6 +238,77 @@ def get_specific_day_chart(folder_name="", file_name_prefix="chart", split_unit=
         klines.render(file_name_prefix + str(i) + ".html")
         klines.width = 990
 
+def get_daily_zhangting_list(folder_name="", index=-1, target_filename = "lyd_result/zhangting.txt"):
+
+    if folder_name == "":
+        today_date = time.strftime("%Y%m%d")
+        target_dir = today_date
+        folder_name = os.getcwd() + os.sep + target_dir
+
+    # determine 上涨
+    def isShangzhang(s_df, index=-1, increase=0.02):
+        if len(s_df.index) >= abs(index) + 1:
+            return ((s_df.iloc[index].close / s_df.iloc[index - 1].close - 1) > increase)
+        else:
+            return False
+
+    # determine 涨停
+    def isZhangting(s_df, index=-1):
+        return isShangzhang(s_df, index, 0.098)
+
+    def completeCode(code_str):
+        if len(code_str) < 6:
+            return "0" * (6 - len(code_str)) + code_str
+        else:
+            return code_str
+
+    # get folder
+    print(time.strftime("%M:%S"))
+    try:
+        file_list = os.listdir(folder_name)
+    except:
+        print(time.strftime("%M:%S"))
+        print("failed to locate folder")
+        return
+
+    file_index = 0
+    select_list = []
+
+    keeper = sk.StkDataKeeper()
+    try:
+        keeper.get_stock_basics_tu("stock_basics.csv")
+    except:
+        keeper.load_stock_list("stock_basics.csv")
+
+    keeper.load_stock_list("stock_basics.csv")
+
+    for file in file_list:
+        # print ("Working on file %s: %s"%(file_index, file))
+        file_index = file_index + 1
+        if ("day" in file):
+            stock_df = pd.read_csv(folder_name + "/" + file)
+            if isZhangting(stock_df, index):
+                stk_id = completeCode(str(stock_df.iloc[0].code))
+                stk_name = ""
+                try:
+                    stk_name = keeper.stock_basics.loc[stk_id][0]
+                except:
+                    stk_name = stk_id
+
+                select_list.append(stk_name)
+
+    try:
+        print(target_filename)
+        print(select_list)
+        f = open(target_filename, "w", encoding='utf-8')
+        print("file open successfully")
+        for name in select_list:
+            f.writelines(name + "\n")
+            print(name)
+        f.close()
+    except:
+        print("failed to output daily zhangting")
+
 def get_daily_chart(analysis_type=-1):
     ########################################
     today_date = time.strftime("%Y%m%d")
@@ -481,6 +552,7 @@ if __name__ == "__main__":
     # get_current()
     # print (os.sep)
     # get_daily_data()
-    get_daily_chart()
+    # get_daily_chart()
     # get_current()
     # get_daily_chart_current()
+    get_daily_zhangting_list()
